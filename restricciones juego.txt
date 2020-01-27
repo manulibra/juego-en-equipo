@@ -1,0 +1,8 @@
+cactus
+manuel
+disparo
+gorro
+gringos
+
+
+https://github.com/manulibra/juego-en-equipo.git
