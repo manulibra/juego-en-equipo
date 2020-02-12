@@ -5,16 +5,25 @@ using UnityEngine;
 public class Bala : MonoBehaviour
 {
     [SerializeField]
-    private float speed;
-    private Vector2 movementDirection;
+    private float velocity;
+    private Rigidbody2D rb2D;
 
-    public void InitializeBullet(Vector2 movementDirection)
+    private void Start()
     {
-        this.movementDirection = movementDirection;
+        rb2D = GetComponent<Rigidbody2D>();
+        rb2D.AddForce(Vector2.up * velocity, ForceMode2D.Impulse);
+        Destroy(gameObject, 3f);
     }
 
-    private void Update()
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        transform.Translate(movementDirection * speed * Time.deltaTime);
+        if (collision.gameObject.GetComponent<Bubble>())
+        {
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.GetComponent<Plataformas>())
+        {
+            Destroy(gameObject);
+        }
     }
 }
