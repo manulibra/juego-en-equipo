@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     }
 
     private MovimientoCactus movimientoCactus;
-    private int vidas = 1;
+    private int vidas = 3;
     private int impactos = 2;
     private Bala bala;
     private List<Bubble> bubbles;
@@ -39,16 +39,17 @@ public class GameManager : MonoBehaviour
         bala = FindObjectOfType<Bala>();
         movimientoCactus = FindObjectOfType<MovimientoCactus>();
         bubbles = new List<Bubble>(FindObjectsOfType<Bubble>());
+        cactus = new List<Cactus>(FindObjectsOfType<Cactus>());
         //gameVictory = false;
         //gameOver = false;
         //SetGameVictory(gameVictory);
         //SetGameOver(gameOver);
     }
-    //private void Update()
-    //{
-    //    prueba = "Vidas: " + vidas;
-    //    textoVidas.text = prueba;
-    //}
+    private void Update()
+    {
+        prueba = "Vidas: " + vidas;
+        textoVidas.text = prueba;
+    }
 
     //private void Update()
     //{
@@ -90,8 +91,8 @@ public class GameManager : MonoBehaviour
 
     public void DestroySamba(MovimientoCactus movimientoCactus)
     {
-        vidas = vidas - 1;
-        if (vidas <= 0)
+        PerdidaVida(vidas);
+        if (vidas < 0)
         { 
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
@@ -110,11 +111,20 @@ public class GameManager : MonoBehaviour
             }
             if (cactus.Count <= 0)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                PerdidaVida(vidas);
+                if (vidas < 0)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
             }
         }
         
 
+    }
+    public void PerdidaVida(int vidas)
+    {
+        vidas = vidas - 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     //public void SetGameVictory(bool value)
     //{

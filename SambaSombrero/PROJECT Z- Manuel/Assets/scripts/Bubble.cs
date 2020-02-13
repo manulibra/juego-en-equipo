@@ -14,6 +14,19 @@ public class Bubble : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
+
+    private void Start()
+    {
+        int rd = Random.Range(0, 10);
+        if (rd % 2 == 0)
+        {
+            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.right, ForceMode2D.Impulse);
+        }
+        else
+        {
+            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.left, ForceMode2D.Impulse);
+        }
+    }
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<Bala>())
@@ -28,14 +41,21 @@ public class Bubble : MonoBehaviour
                  DivisionBubble(impactos);
                 impactos = impactos - 1;
             }
+        }if (collision.gameObject.GetComponent<Plataformas>())
+        {
+            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.zero, ForceMode2D.Impulse);
         }
         if (collision.gameObject.tag == "Abajo")
         {
             gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up, ForceMode2D.Impulse);
         }
-        if (collision.gameObject.GetComponent<Plataformas>())
+        if (collision.gameObject.tag == "Izquierda")
         {
             gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.right, ForceMode2D.Impulse);
+        }
+        if (collision.gameObject.tag == "Derecha")
+        {
+            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.left, ForceMode2D.Impulse);
         }
     }
 
@@ -46,16 +66,16 @@ public class Bubble : MonoBehaviour
 
     public void DivisionBubble(int impactos)
     {
-        Bubble Bubble1 = Instantiate(this, rb.position + Vector2.right / 2, Quaternion.identity);
-        Bubble Bubble2 = Instantiate(this, rb.position + Vector2.left / 2, Quaternion.identity);
-        Bubble1.GetComponent<Rigidbody2D>().AddForce(new Vector2(2, 2), ForceMode2D.Impulse);
-        Bubble2.GetComponent<Rigidbody2D>().AddForce(new Vector2(-2, 2), ForceMode2D.Impulse);
-        Bubble1.transform.localScale = transform.localScale / 2;
-        Bubble2.transform.localScale = transform.localScale / 2;
-        Bubble1.Initialize(impactos - 1);
-        Bubble2.Initialize(impactos - 1);
-        GameManager.Instance.AddBubble(Bubble1);
-        GameManager.Instance.AddBubble(Bubble2);
+        Bubble bubble1 = Instantiate(this, rb.position + Vector2.right / 1, Quaternion.identity);
+        Bubble bubble2 = Instantiate(this, rb.position + Vector2.left / 1, Quaternion.identity);
+        bubble1.GetComponent<Rigidbody2D>().AddForce(new Vector2(2, 1), ForceMode2D.Impulse);
+        bubble2.GetComponent<Rigidbody2D>().AddForce(new Vector2(-2, 1), ForceMode2D.Impulse);
+        bubble1.transform.localScale = transform.localScale / 2;
+        bubble2.transform.localScale = transform.localScale / 2;
+        bubble1.Initialize(impactos - 1);
+        bubble2.Initialize(impactos - 1);
+        GameManager.Instance.AddBubble(bubble1);
+        GameManager.Instance.AddBubble(bubble2);
         GameManager.Instance.DestroyBubble(this);
 
     }
