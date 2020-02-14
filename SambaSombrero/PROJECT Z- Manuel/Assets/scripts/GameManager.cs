@@ -21,14 +21,11 @@ public class GameManager : MonoBehaviour
     }
 
     private MovimientoCactus movimientoCactus;
-    private int vidas = 3;
+    private int vidas;
     private int impactos = 2;
     private Bala bala;
     private List<Bubble> bubbles;
     private List<Cactus> cactus;
-    [SerializeField]
-    private Text textoVidas;
-    private string prueba;
 
     //private bool gamePaused = false;
     //private bool gameVictory = false;
@@ -40,16 +37,13 @@ public class GameManager : MonoBehaviour
         movimientoCactus = FindObjectOfType<MovimientoCactus>();
         bubbles = new List<Bubble>(FindObjectsOfType<Bubble>());
         cactus = new List<Cactus>(FindObjectsOfType<Cactus>());
+
         //gameVictory = false;
         //gameOver = false;
         //SetGameVictory(gameVictory);
         //SetGameOver(gameOver);
     }
-    private void Update()
-    {
-        prueba = "Vidas: " + vidas;
-        textoVidas.text = prueba;
-    }
+    
 
     //private void Update()
     //{
@@ -91,11 +85,7 @@ public class GameManager : MonoBehaviour
 
     public void DestroySamba(MovimientoCactus movimientoCactus)
     {
-        PerdidaVida(vidas);
-        if (vidas < 0)
-        { 
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     
@@ -111,21 +101,13 @@ public class GameManager : MonoBehaviour
             }
             if (cactus.Count <= 0)
             {
-                PerdidaVida(vidas);
-                if (vidas < 0)
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                }
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
         
 
     }
-    public void PerdidaVida(int vidas)
-    {
-        vidas = vidas - 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    
     //public void SetGameVictory(bool value)
     //{
     //    gameVictory = value;
@@ -137,7 +119,7 @@ public class GameManager : MonoBehaviour
     //    {
     //        Time.timeScale = 1f;
     //    }
-    //    UIManager.Instance.SetGameVictory(gameVictory);
+    //    
     //}
     //public void SetGameOver(bool value)
     //{
