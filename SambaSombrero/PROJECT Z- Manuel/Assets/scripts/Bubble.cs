@@ -10,6 +10,9 @@ public class Bubble : MonoBehaviour
     [SerializeField]
     private int impactos = 1;
 
+    [SerializeField]
+    private AudioClip Destroy;
+
     public void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,7 +44,9 @@ public class Bubble : MonoBehaviour
                  DivisionBubble(impactos);
                 impactos = impactos - 1;
             }
-        }if (collision.gameObject.GetComponent<Plataformas>())
+            SoundManager.Instance.PlaySoundEffect(Destroy);
+        }
+        if (collision.gameObject.GetComponent<Plataformas>())
         {
             gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.zero, ForceMode2D.Impulse);
         }
@@ -61,6 +66,7 @@ public class Bubble : MonoBehaviour
 
     public void DestroyBubble()
     {
+        
         GameManager.Instance.DestroyBubble(this);
     }
 
@@ -77,6 +83,7 @@ public class Bubble : MonoBehaviour
         GameManager.Instance.AddBubble(bubble1);
         GameManager.Instance.AddBubble(bubble2);
         GameManager.Instance.DestroyBubble(this);
+        SoundManager.Instance.PlaySoundEffect(Destroy);
 
     }
 

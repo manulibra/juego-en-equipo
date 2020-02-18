@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Movimiento2 : MonoBehaviour
 {
-    private float speed = 4f;
+    private float speed = 6f;
 
     private float movement = 0f;
 
@@ -43,11 +43,11 @@ public class Movimiento2 : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            animator.SetInteger("Velocity", 4);
+            animator.SetInteger("Velocity", 6);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            animator.SetInteger("Velocity", 4);
+            animator.SetInteger("Velocity", 6);
         }
         else
         {
@@ -66,14 +66,22 @@ public class Movimiento2 : MonoBehaviour
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Izquierda")
-        {
-                       
-        }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                animator.SetInteger("Velocity", 0);
+            }
         if (collision.gameObject.tag == "Derecha")
         {
-            
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                animator.SetInteger("Velocity", 0);
+            }
         }
-           
+
+        if (collision.gameObject.GetComponent<Bubble>())
+        {
+            GameManager.Instance.DestroySamba(this);
+        }
     }
     
 }

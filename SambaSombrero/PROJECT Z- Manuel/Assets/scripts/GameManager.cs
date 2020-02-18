@@ -20,42 +20,49 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private MovimientoCactus movimientoCactus;
+    private Movimiento2 movimiento2;
     private int vidas;
     private int impactos = 2;
     private Bala bala;
     private List<Bubble> bubbles;
     private List<Cactus> cactus;
 
-    //private bool gamePaused = false;
-    //private bool gameVictory = false;
-    //private bool gameOver = false;
+    private bool gamePaused = false;
+    private bool winMenu = false;
+    private bool loseMenu = false;
+
+    public void ResetGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
     private void Start()
     {
         bala = FindObjectOfType<Bala>();
-        movimientoCactus = FindObjectOfType<MovimientoCactus>();
+        movimiento2 = FindObjectOfType<Movimiento2>();
         bubbles = new List<Bubble>(FindObjectsOfType<Bubble>());
         cactus = new List<Cactus>(FindObjectsOfType<Cactus>());
 
-        //gameVictory = false;
-        //gameOver = false;
-        //SetGameVictory(gameVictory);
-        //SetGameOver(gameOver);
+        winMenu = false;
+        loseMenu = false;
+        SetGameVictory(winMenu);
+        SetGameOver(loseMenu);
+        gamePaused = false;
+        SetGamePaused(gamePaused);
     }
-    
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.P))
-    //    {
-    //        SetGamePaused(!gamePaused);
-    //    }
-    //}
 
-    public MovimientoCactus GetMovimientoCactus()
+    private void Update()
     {
-        return movimientoCactus;
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SetGamePaused(!gamePaused);
+        }
+    }
+
+    public Movimiento2 GetMovimiento2()
+    {
+        return movimiento2;
     }
 
     
@@ -78,14 +85,14 @@ public class GameManager : MonoBehaviour
             Destroy(bubble.gameObject);
             if (bubbles.Count <= 0)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                SetGameVictory(!winMenu);
             }
         }
     }
 
-    public void DestroySamba(MovimientoCactus movimientoCactus)
+    public void DestroySamba(Movimiento2 movimiento2)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SetGameOver(!loseMenu);
     }
 
     
@@ -101,37 +108,51 @@ public class GameManager : MonoBehaviour
             }
             if (cactus.Count <= 0)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                SetGameOver(!loseMenu);
             }
         }
         
 
     }
-    
-    //public void SetGameVictory(bool value)
-    //{
-    //    gameVictory = value;
-    //    if (gameVictory)
-    //    {
-    //        Time.timeScale = 0f;
-    //    }
-    //    else
-    //    {
-    //        Time.timeScale = 1f;
-    //    }
-    //    
-    //}
-    //public void SetGameOver(bool value)
-    //{
-    //    gameOver = value;
-    //    if (gameOver)
-    //    {
-    //        Time.timeScale = 0f;
-    //    }
-    //    else
-    //    {
-    //        Time.timeScale = 1f;
-    //    }
-    //    UIManager.Instance.SetGameOver(gameOver);
-    //}
+
+    public void SetGamePaused(bool value)
+    {
+        gamePaused = value;
+        if (gamePaused)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+        UIManager.Instance.SetPauseMenu(gamePaused);
+    }
+
+    public void SetGameVictory(bool value)
+    {
+        winMenu = value;
+        if (winMenu)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+        UIManager.Instance.SetGameVictory(winMenu);
+    }
+    public void SetGameOver(bool value)
+    {
+        loseMenu = value;
+        if (loseMenu)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+        UIManager.Instance.SetGameOver(loseMenu);
+    }
 }
