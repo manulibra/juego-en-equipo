@@ -10,6 +10,8 @@ TagManager:
   - Izquierda
   - Escalera
   - Plataforma
+  - Bubble
+  - Jugador
   layers:
   - Default
   - TransparentFX
@@ -22,9 +24,9 @@ TagManager:
   - Escalera
   - Jugador
   - Abajo
-  - 
-  - 
-  - 
+  - Bubble
+  - Plataforma
+  - Item
   - 
   - 
   - 

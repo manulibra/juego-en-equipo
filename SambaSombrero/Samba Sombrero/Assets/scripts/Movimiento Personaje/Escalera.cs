@@ -35,6 +35,9 @@ public class Escalera : MonoBehaviour
                 onEscalera = true;
                 platformGround.enabled = false;
                 movimiento.usingLadder = onEscalera;
+
+                float movement = Input.GetAxisRaw("Vertical") * 8f;
+                rb.MovePosition(rb.position + Vector2.up * movement * Time.fixedDeltaTime);
             }
             else if (Input.GetAxisRaw("Vertical") == 0 && onEscalera)
             {

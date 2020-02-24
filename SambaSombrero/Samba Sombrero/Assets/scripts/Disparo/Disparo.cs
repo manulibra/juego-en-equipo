@@ -22,7 +22,7 @@ public class Disparo : MonoBehaviour
     private void Shoot()
     {
         Movimiento2 movimiento2 = GameManager.Instance.GetMovimiento2();
-        Instantiate(bulletPrefab, movimiento2.transform.position + new Vector3(0.1f, 1.31f), bulletPrefab.transform.rotation);
+        Instantiate(bulletPrefab, movimiento2.transform.position + new Vector3(0.1f, 1f), bulletPrefab.transform.rotation);
         SoundManager.Instance.PlaySoundEffect(shoot);
 
     }

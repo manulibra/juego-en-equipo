@@ -25,22 +25,29 @@ public class DontDestroy : MonoBehaviour
     }
     private void Start()
     {
-        UpdateVidas();
+        TextVidas();
     }
-    public void PerdidaVida()
+    private void Update()
     {
-        vidas = vidas - 1;
-        PlayerPrefs.SetInt("vidas", vidas);
+        TextVidas();
+    }
+    public int PerdidaVida()
+    {
+        vidas--;
+        return vidas;
+        
     }
 
-    public void UpdateVidas()
+    public int Vidas()
     {
-        textoVidas.text = "Vidas: " + vidas.ToString();
-    }
-
-    public int LoadVidas()
-    {
-        vidas = PlayerPrefs.GetInt("vidas");
         return vidas;
     }
+
+    public string TextVidas()
+    {
+        textoVidas.text = "Vidas: " + vidas.ToString();
+        return textoVidas.text;
+    }
+
+    
 }

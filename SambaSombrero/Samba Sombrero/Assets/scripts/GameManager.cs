@@ -34,9 +34,16 @@ public class GameManager : MonoBehaviour
     private bool winMenu = false;
     private bool loseMenu = false;
 
+    private DontDestroy dd;
+    //private int vidasRestantes;
+    private Text text;
+    
+
     public void ResetGame()
     {
+       
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
     }
 
     private void Start()
@@ -52,6 +59,10 @@ public class GameManager : MonoBehaviour
         SetGameOver(loseMenu);
         gamePaused = false;
         SetGamePaused(gamePaused);
+
+        dd = FindObjectOfType<DontDestroy>();
+        //vidasRestantes = dd.Vidas();
+        text.text = dd.TextVidas();
     }
 
 
@@ -95,8 +106,12 @@ public class GameManager : MonoBehaviour
 
     public void DestroySamba(Movimiento2 movimiento2)
     {
-        SetGameOver(!loseMenu);
-
+        dd.PerdidaVida();
+        if (dd.Vidas() <= 0)
+        {
+            SetGameOver(!loseMenu);
+        }
+        ResetGame();
         SoundManager.Instance.PlaySoundEffect(shit);
     }
 
@@ -113,8 +128,12 @@ public class GameManager : MonoBehaviour
             }
             if (cactus.Count <= 0)
             {
-                SetGameOver(!loseMenu);
-
+                dd.PerdidaVida();
+                if (dd.Vidas() <= 0)
+                {
+                    SetGameOver(!loseMenu);
+                }
+                ResetGame();
                 SoundManager.Instance.PlaySoundEffect(shit);
             }
         }

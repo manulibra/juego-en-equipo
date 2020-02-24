@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Movimiento2 : MonoBehaviour
 {
-    private float speed = 8f;
+    private float speed = 6f;
+    private float speedBasica;
 
     private float movement = 0f;
 
@@ -32,9 +33,13 @@ public class Movimiento2 : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        groundCheck = GetComponent<Transform>();
     }
 
-    
+    private void Start()
+    {
+        speedBasica = speed;
+    }
 
     void Update()
     {
@@ -53,34 +58,34 @@ public class Movimiento2 : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            animator.SetInteger("Velocity", 8);
+            animator.SetInteger("Velocity", 6);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            animator.SetInteger("Velocity", 8);
+            animator.SetInteger("Velocity", 6);
         }
         else
         {
             animator.SetInteger("Velocity", 0);
         }
 
-
-        rb.MovePosition(rb.position + Vector2.right * movement * Time.fixedDeltaTime);
-
-        newX = Mathf.Clamp(transform.position.x, -8, 8);
-
-        transform.position = new Vector2(newX, transform.position.y);
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+        {
+            rb.MovePosition(rb.position + Vector2.right * movement * Time.fixedDeltaTime);
+        }
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, target);
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Izquierda")
+        if (collision.gameObject.tag == "Izquierda") 
+        {
             if (Input.GetKey(KeyCode.LeftArrow))
             {
                 animator.SetInteger("Velocity", 0);
             }
+        }
         if (collision.gameObject.tag == "Derecha")
         {
             if (Input.GetKey(KeyCode.RightArrow))
@@ -94,5 +99,18 @@ public class Movimiento2 : MonoBehaviour
             GameManager.Instance.DestroySamba(this);
         }
     }
-    
+
+    public float Speed()
+    {
+        speed = speed * 2f;
+        return speed;
+
+    }
+
+    public float Simple()
+    {
+        speed = speedBasica;
+        return speed;
+
+    }
 }

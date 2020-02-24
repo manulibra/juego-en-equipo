@@ -11,7 +11,7 @@ public class Bubble : MonoBehaviour
     private int impactos = 1;
 
     [SerializeField]
-    private AudioClip Destroy;
+    private new AudioClip Destroy;
 
     public void Awake()
     {
@@ -45,26 +45,6 @@ public class Bubble : MonoBehaviour
                 impactos = impactos - 1;
             }
             SoundManager.Instance.PlaySoundEffect(Destroy);
-        }
-        if (collision.gameObject.GetComponent<Plataformas>())
-        {
-            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.zero);
-            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.zero, ForceMode2D.Impulse);
-        }
-        if (collision.gameObject.tag == "Abajo")
-        {
-            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.zero);
-            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up, ForceMode2D.Impulse);
-        }
-        if (collision.gameObject.tag == "Izquierda")
-        {
-            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.zero);
-            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.right, ForceMode2D.Impulse);
-        }
-        if (collision.gameObject.tag == "Derecha")
-        {
-            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.zero);
-            gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.left, ForceMode2D.Impulse);
         }
     }
 
